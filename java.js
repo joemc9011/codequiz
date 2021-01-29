@@ -1,10 +1,10 @@
 const button = document.querySelector(".start");
 const quizpage = document.querySelector(".quizbody");
 const questionNum = document.querySelector(".questionheader");
-const choicesEL = document.querySelector(".choicess");
+const choicesEL = document.querySelector(".choices");
 const answerEl = document.querySelector("#answer");
-const scores = document.querySelector("#highscores");
-const timer = document.querySelector("#timer");
+const scores = document.querySelector(".highscores");
+const timerEl = document.querySelector("#timer");
 
 
 var questions = [
@@ -34,69 +34,24 @@ var questions = [
 
 var questionIndex = 0;
 var correctCount = 0;
-var time = 15;
+var time = 3;
 var intervalId;
 
 function startQuiz() {
-    time = 15;
-    timer.innerHTML = time;
-    button.style.visibility = "hidden";
+    time--;
+    timer.textContent = time;
     
-
     function updateTime() {
         time--;
+        timer.textContent = time
         if (time <= 0) {
+            clearInterval(intervalId);
             endQuiz();
         }
     };
 
     intervalId = setInterval(updateTime, 1000);
+    nextQuestion();
 
-    };
+};
 
-    function renderQuestions (){
-
-        questionEl.textContent = questions[questionIndex].question;
-
-        choicesEl.innerHTML = "";
-        answerEl.innerHTML = "";
-    
-        var choicess = questions[questionIndex].choicess;
-        var choicessLenth = choicess.length;
-    
-        for (var i = 0; i < choicessLenth; i++) {
-            var questionListItem = document.createElement("li");
-            questionListItem.textContent = choicess[i];
-            optionListEl.append(questionListItem);
-    }
-}
-
-function nextQuestion () {
-    questionIndex++;
-    if (questionIndex === questions.length) {
-        time = 0;
-      }
-      else {
-        renderQuestion();
-
-      }
-    }
-
-
-    function checkAnswer(event) {
-        clearInterval(intervalId);
-        if (event.target.matches("li")) {
-          var answer = event.target.textContent;
-          if (answer === questions[questionIndex].answer) {
-            answerEl.textContent = "Correct";
-            correctCount++;
-      
-            
-          } else {
-            answerEl.textContent = "Incorrect";
-            time = time - 2;
-            timerEl.textContent = time;
-          }
-        }
-        setTimeout(nextQuestion, 500);
-      }
