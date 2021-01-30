@@ -1,10 +1,8 @@
+const timerEl = document.querySelector(".timer");
+const questionEl = document.querySelector(".questionheader");
+const choicesEl = document.querySelector(".choices");
+const scores = document.querySelector("#highscores");
 const button = document.querySelector(".start");
-const quizpage = document.querySelector(".quizbody");
-const questionNum = document.querySelector(".questionheader");
-const choicesEL = document.querySelector(".choices");
-const answerEl = document.querySelector("#answer");
-const scores = document.querySelector(".highscores");
-const timerEl = document.querySelector("#timer");
 
 
 var questions = [
@@ -30,28 +28,67 @@ var questions = [
     },
 ];
 
-
-
 var questionIndex = 0;
 var correctCount = 0;
-var time = 3;
+var time =  15;
 var intervalId;
 
-function startQuiz() {
+
+function start() {
     time--;
-    timer.textContent = time;
-    
-    function updateTime() {
-        time--;
-        timer.textContent = time
-        if (time <= 0) {
-            clearInterval(intervalId);
-            endQuiz();
-        }
-    };
+  timerEl.textContent = time;
+  if (time <= 0) {
+    endQuiz();
+  }
+}
 
-    intervalId = setInterval(updateTime, 1000);
-    nextQuestion();
+function renderQuestion() {
+  
+  if (time == 0) {
+    start();
+    return;
+  }
 
-};
+  intervalId = setInterval(start, 1000);
+  
+  questionEl.textContent = questions[questionIndex].question;
 
+  choicesEl.innerHTML = "";
+  answerEl.innerHTML = "";
+
+  var choices = questions[questionIndex].choices;
+  var choicesLenth = choices.length;
+
+  for (var i = 0; i < choicesLenth; i++) {
+    var questionListItem = document.createElement("li");
+    questionListItem.textContent = choices[i];
+    choicesEl.append(questionListItem);
+  }
+}
+
+function nextQuestion() {
+  questionIndex++;
+  if (questionIndex === questions.length) {
+    time = 0;
+  }
+  renderQuestion();
+}
+
+function checkAnswer(event) {
+  clearInterval(intervalId);
+  if (event.target.matches("li")) {
+    var answer = event.target.textContent;
+    if (answer === questions[questionIndex].answer) {
+        answerEl.textContent = "Correct";
+      correctCount++;
+    } else {
+        answerEl.textContent = "Incorrect";
+      time = time - 2;
+      timerEl.textContent = time;
+    }
+  }
+  setTimeout(nextQuestion, 2000);
+}
+
+renderQuestion();
+choicesEl.addEventListener("click", checkAnswer);
