@@ -6,19 +6,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Code Quiz</title>
 
-    <script src="./assets/java.js"></script>
-    <link rel = "stylesheet" href="./assets/style.css"/>
+    <link rel="stylesheet" href="./assets/style.css" />
+   
+
 </head>
 
 <body>
+    <div id="startdiv" class="start">
+        <button id="start">Start Quiz!</button>
+    </div>
 
-    <button class="start">Start Quiz!</button>
 
 
     <div id="questionbody" class="hide">
-        <h1 class="questionheader"></h1>
-        <div class ="choices"></div>
-        <div class= "result" ></div>
+        <div class="timer" id="time"></div>
+        <h1 id="questionheader"></h1>
+        <div id="choices" class="choices"></div>
+        <div id="result" class="result"></div>
     </div>
 
     <div id="highscores" class="hide">
@@ -28,7 +32,7 @@
 
 
 
-
+    <script src="./assets/java.js"></script>
 </body>
 
 </html>

@@ -1,3 +1,17 @@
 .hide {
     display: none;
 }
+
+.btncolor {
+    background-color: rgb(43, 219, 219);
+    display: block;
+}
+
+body {
+    background-color: yellow;
+    text-align: center;
+}
+
+h1{
+    background-color: tomato;
+}

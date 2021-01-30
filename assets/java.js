@@ -1,10 +1,10 @@
-const timerEl = document.querySelector(".timer");
-const questionEl = document.querySelector(".questionheader");
-const choicesEl = document.querySelector(".choices");
-const scores = document.querySelector("#highscores");
-const questionbody = document.querySelector("#questionbod");
-const button = document.querySelector(".start");
-const resultEl = document.querySelector(".result");
+var timerEl = document.getElementById("time");
+var questionEl = document.getElementById("questionheader");
+var choicesEl = document.getElementById("choices");
+var scores = document.getElementById("highscores");
+var questionbody = document.getElementById("questionbody");
+var buttonDom = document.getElementById("start");
+var resultEl = document.getElementById("result");
 
 
 var questions = [
@@ -32,12 +32,14 @@ var questions = [
 
 var questionIndex = 0;
 var correctCount = 0;
-var time = 15;
+var time = 25;
 var intervalId;
 
 
 function start() {
-    button.setAttribute("class", "hide");
+    var buttonSt = document.getElementById("startdiv");
+
+    buttonSt.setAttribute("class", "hide");
     questionbody.removeAttribute("class");
 
     timer = setInterval(countDown, 1000);
@@ -67,15 +69,12 @@ function renderQuestion() {
 
     for (var i = 0; i < choices.length; i++) {
         var questionList = document.createElement("button");
-        questionList.setAttribute("class", "btncolor");
-        questionList.setAttribute("value", choice);
+        questionList.setAttribute("value", choices[i]);
         questionList.textContent = choices[i];
         choicesEl.append(questionList);
 
         questionList.onclick = checkAnswer;
-
-
-    };
+    }
 }
 
 function checkAnswer() {
@@ -98,45 +97,45 @@ function checkAnswer() {
 function nextQuestion() {
     questionIndex++;
     if (questionIndex === questions.length) {
-        endQuiz();
+        stopQuiz();
     } else {
         renderQuestion();
     }
 
 }
 
-function endQuiz(){
+function stopQuiz() {
     clearInterval(timer);
     scores.removeAttribute("class");
     questionbody.setAttribute("class", "hide");
     var name = prompt("Please enter your name");
 
-    var highScores= localStorage.getItem("scores");
-  
-    if (!highScores) {
-      highScores= [];
-    } else {
-      highScores= JSON.parse(highScores);
-    }
-  
-    highScores.push({ name: name, score: correctCount });
-  
-    localStorage.setItem("scores", JSON.stringify(highScores));
-  
-    highScores.sort(function (a, b) {
-      return b.score - a.score;
-    });
-  
-    var scoresUL = document.createElement("ul");
-  
-    for (var i = 0; i < highScores.length; i++) {
-      var contentLI = document.createElement("li");
-      contentLI.textContent =
-        "Name: " + highScores[i].name + " Score: " + highScores[i].score;
-      scoresUL.appendChild(contentLI);
-    }
-  
-    document.body.appendChild(contentUL);
-  }
+    var highScores = localStorage.getItem("scores");
 
-  button.onclick = start;
+    if (!highScores) {
+        highScores = [];
+    } else {
+        highScores = JSON.parse(highScores);
+    }
+
+    highScores.push({ name: name, score: correctCount });
+
+    localStorage.setItem("scores", JSON.stringify(highScores));
+
+    highScores.sort(function (a, b) {
+        return b.score - a.score;
+    });
+
+    var scoresUL = document.createElement("ul");
+
+    for (var i = 0; i < highScores.length; i++) {
+        var contentLI = document.createElement("li");
+        contentLI.textContent =
+            "Name: " + highScores[i].name + " Score: " + highScores[i].score;
+        scoresUL.appendChild(contentLI);
+    }
+
+    document.body.appendChild(contentUL);
+}
+
+buttonDom.onclick=start;
