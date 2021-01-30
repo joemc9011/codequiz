@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Code Quiz</title>
 
-    <script src="./java.js"></script>
+    <script src="./assets/java.js"></script>
+    <link rel = "stylesheet" href="./assets/style.css"/>
 </head>
 
 <body>
@@ -14,21 +15,13 @@
     <button class="start">Start Quiz!</button>
 
 
-    <div id="timer"></div>
-    <h1 class="questionheader"></h1>
+    <div id="questionbody" class="hide">
+        <h1 class="questionheader"></h1>
+        <div class ="choices"></div>
+    </div>
 
-
-    <ul class="choices">
-
-
-        <div id="answer">
-
-        </div>
-
-
-    </ul>
-
-    <div class="highscores">
+    <div id="highscores" class="hide">
+        <h1>Finished!</h2>
 
     </div>
 
