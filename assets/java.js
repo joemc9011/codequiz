@@ -45,3 +45,17 @@ function start() {
 
   renderQuestion();
 }
+
+function countDown() {
+    time--;
+    timerEl.textContent = time;
+
+    if (time <= 0) {
+        stopQuiz();
+    }
+}
+
+renderQuestion () {
+    var  questionUp =questions[questionIndex];
+    questionEl.textContent = questionUp.question;
+}
